@@ -14,7 +14,7 @@
   --titulo:'Cormorant Garamond',serif; --script:'Pinyon Script',cursive; --sans:'Montserrat',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#CFC6AE url('assets/fondo.jpg') center/cover fixed;color:var(--texto);font-family:var(--titulo);font-size:1.35rem;line-height:1.6;overflow-x:hidden}
+body{background:#E9E0C8;color:var(--texto);font-family:var(--titulo);font-size:1.35rem;line-height:1.6;overflow-x:hidden}
 
 /* SOBRE */
 #envelope-screen{position:fixed;inset:0;z-index:9999;background:#2B3320 url('assets/fondo.jpg') center/cover;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1s,visibility 1s}
@@ -32,10 +32,11 @@ body{background:#CFC6AE url('assets/fondo.jpg') center/cover fixed;color:var(--t
 
 #audio-btn{position:fixed;bottom:22px;right:22px;width:52px;height:52px;border-radius:50%;border:1px solid var(--verde-os);background:var(--crema);color:var(--verde-os);font-size:1.1rem;cursor:pointer;z-index:9000;display:none;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.2)}
 
-/* HOJA DE PAPEL */
+/* FONDO DE PAPEL FIJO */
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:#E9E0C8 url('assets/fondo.jpg') center/cover no-repeat}
+/* CONTENIDO */
 #invitation-content{visibility:hidden;opacity:0;transition:opacity 1.5s;padding:24px 12px 40px}
-.paper{max-width:640px;margin:0 auto;background:#F6F0DE url('assets/fondo.jpg') center/cover;padding:60px 36px;text-align:center;
-  box-shadow:0 1px 2px rgba(0,0,0,.2),0 14px 40px rgba(60,50,20,.3),inset 0 0 70px rgba(150,125,70,.25);outline:1px solid rgba(78,107,44,.25);outline-offset:-14px}
+.paper{max-width:640px;margin:0 auto;padding:60px 36px;text-align:center}
 section{margin-bottom:56px}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity 1s,transform 1s}
 .reveal.visible{opacity:1;transform:none}
