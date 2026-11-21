@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boda de Cinthia y Pedro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Pinyon+Script&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --crema:#F3ECD8; --beige:#E3D6B8; --verde:#8FAE5A; --verde-os:#4E6B2C; --tinta:#2F3A22; --texto:#4A4A3C;
+  --titulo:'Cormorant Garamond',serif; --script:'Pinyon Script',cursive; --sans:'Montserrat',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#CFC6AE url('assets/fondo.jpg') center/cover fixed;color:var(--texto);font-family:var(--titulo);font-size:1.35rem;line-height:1.6;overflow-x:hidden}
+
+/* SOBRE */
+#envelope-screen{position:fixed;inset:0;z-index:9999;background:#2B3320 url('assets/fondo.jpg') center/cover;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1s,visibility 1s}
+#envelope-screen::before{content:"";position:absolute;inset:0;background:rgba(30,40,20,.7)}
+.envelope-wrapper{position:relative;width:320px;height:216px;cursor:pointer;perspective:1200px;z-index:2;transition:transform .4s}
+.envelope-wrapper:hover{transform:scale(1.04)}
+.envelope-body{position:absolute;inset:0;background:var(--crema);border-radius:3px;box-shadow:0 18px 40px rgba(0,0,0,.5)}
+.envelope-front{position:absolute;inset:0;z-index:3;border-left:160px solid #EADFC4;border-right:160px solid #EADFC4;border-bottom:110px solid #DFD2B0;border-top:106px solid transparent;pointer-events:none}
+.envelope-flap{position:absolute;top:0;left:0;width:0;height:0;border-left:160px solid transparent;border-right:160px solid transparent;border-top:122px solid var(--crema);transform-origin:top;transition:transform .8s cubic-bezier(.4,0,.2,1);z-index:4;filter:drop-shadow(0 4px 5px rgba(0,0,0,.15))}
+.seal{position:absolute;top:82px;left:50%;transform:translateX(-50%);z-index:5;width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 4px 6px rgba(0,0,0,.4));transition:opacity .3s}
+.envelope-wrapper.open .envelope-flap{transform:rotateX(180deg);z-index:1;filter:none}
+.envelope-wrapper.open .seal{opacity:0}
+.envelope-text{position:relative;z-index:2;margin-top:40px;color:var(--beige);font-family:var(--sans);font-size:.8rem;letter-spacing:4px;text-transform:uppercase;animation:pulse 2.5s infinite}
+@keyframes pulse{50%{opacity:.4}}
+
+#audio-btn{position:fixed;bottom:22px;right:22px;width:52px;height:52px;border-radius:50%;border:1px solid var(--verde-os);background:var(--crema);color:var(--verde-os);font-size:1.1rem;cursor:pointer;z-index:9000;display:none;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+
+/* HOJA DE PAPEL */
+#invitation-content{visibility:hidden;opacity:0;transition:opacity 1.5s;padding:24px 12px 40px}
+.paper{max-width:640px;margin:0 auto;background:#F6F0DE url('assets/fondo.jpg') center/cover;padding:60px 36px;text-align:center;
+  box-shadow:0 1px 2px rgba(0,0,0,.2),0 14px 40px rgba(60,50,20,.3),inset 0 0 70px rgba(150,125,70,.25);outline:1px solid rgba(78,107,44,.25);outline-offset:-14px}
+section{margin-bottom:56px}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 1s,transform 1s}
+.reveal.visible{opacity:1;transform:none}
+h2{font-family:var(--titulo);font-weight:500;font-size:2.4rem;color:var(--verde-os);letter-spacing:2px;margin-bottom:6px}
+.sub{font-family:var(--sans);font-size:.85rem;letter-spacing:3px;text-transform:uppercase;color:var(--verde-os);margin-bottom:10px}
+.orn{color:var(--verde);margin:14px 0 22px;display:flex;align-items:center;justify-content:center;gap:14px}
+.orn::before,.orn::after{content:"";width:60px;height:1px;background:var(--verde);opacity:.7}
+
+/* HERO */
+.hero .intro{font-family:var(--sans);font-size:.9rem;letter-spacing:4px;text-transform:uppercase;color:var(--tinta)}
+.names{margin:14px 0 10px;line-height:1.05}
+.names .n{display:block;font-family:var(--script);font-size:4.8rem;color:var(--tinta)}
+.names .y{display:block;font-family:var(--titulo);font-style:italic;font-size:2.2rem;color:var(--verde)}
+.frase{font-style:italic;max-width:480px;margin:0 auto}
+.script{font-family:var(--script);font-size:2.5rem;color:var(--verde-os);margin-bottom:14px}
+.grupo{margin-bottom:20px}
+.grupo h4{font-family:var(--sans);font-size:.82rem;letter-spacing:3px;text-transform:uppercase;color:var(--verde-os);margin-bottom:4px;font-weight:600}
+
+/* FECHA */
+.fecha{font-size:clamp(2.5rem,9vw,3.6rem);color:var(--tinta);letter-spacing:2px}
+.cal{max-width:310px;margin:20px auto;font-family:var(--sans);font-size:1rem}
+.cal-mes{letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;color:var(--tinta)}
+.grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-h{font-weight:600;color:var(--verde-os);font-size:.8rem;border-bottom:1px solid rgba(78,107,44,.35);padding-bottom:5px;margin-bottom:6px}
+.grid7 div{padding:7px 0}
+.hl{background:var(--verde-os);color:var(--crema);border-radius:50%;font-weight:600}
+.timer{margin:28px 0 8px;padding:20px 0;border-top:1px solid rgba(78,107,44,.4);border-bottom:1px solid rgba(78,107,44,.4)}
+#countdown{display:flex;justify-content:space-evenly;font-family:var(--sans)}
+#countdown span{display:flex;flex-direction:column;align-items:center;font-size:.75rem;letter-spacing:2px}
+#countdown b{font-family:var(--titulo);font-weight:500;font-size:2.6rem;color:var(--tinta);line-height:1.1}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--verde-os);color:var(--crema);border:1px solid var(--verde-os);padding:13px 24px;font-family:var(--sans);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;cursor:pointer;margin-top:14px;border-radius:2px;transition:.3s}
+.btn:hover{background:transparent;color:var(--verde-os)}
+.btn.line{background:transparent;color:var(--verde-os)}
+.btn.line:hover{background:var(--verde-os);color:var(--crema)}
+
+/* ITINERARIO */
+.tl{text-align:left;max-width:360px;margin:0 auto;position:relative;padding-left:4px}
+.tl::before{content:"";position:absolute;left:19px;top:8px;bottom:8px;width:1px;background:rgba(78,107,44,.45)}
+.ti{display:flex;align-items:center;gap:18px;margin-bottom:26px;position:relative}
+.ti i{width:32px;height:32px;border-radius:50%;background:var(--crema);border:1px solid var(--verde-os);color:var(--verde-os);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
+.ti b{display:block;font-family:var(--sans);font-size:1rem;color:var(--verde-os);letter-spacing:1px}
+.ti span{font-size:1.6rem;color:var(--tinta)}
+
+/* VESTIMENTA */
+.dress{background:linear-gradient(160deg,#5B7B34,#44601F);color:var(--crema);padding:44px 28px;margin:0 -12px;box-shadow:inset 0 0 40px rgba(0,0,0,.35)}
+.dress h2{color:var(--crema)}
+.dress .sub{color:var(--beige)}
+.swatch{display:inline-block;width:44px;height:44px;border-radius:50%;background:var(--verde);border:2px solid var(--crema);margin:14px 0 6px}
+
+/* HOSPEDAJE */
+.hotel{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;margin-bottom:12px;background:rgba(255,255,255,.45);border:1px solid rgba(78,107,44,.3);text-align:left}
+.hotel h4{font-size:1.5rem;font-weight:500;color:var(--tinta)}
+.hotel .btn{margin:0;padding:10px 14px;font-size:.75rem}
+
+/* SPOTIFY */
+.spotify iframe{border-radius:12px;margin-top:8px}
+
+/* UBICACIONES */
+.venue{background:rgba(255,255,255,.5);border:1px solid rgba(78,107,44,.3);padding:28px 18px;margin-bottom:26px}
+.venue>i{font-size:1.8rem;color:var(--verde);margin-bottom:10px}
+.venue h3{font-weight:500;font-size:2.1rem;color:var(--tinta)}
+.hora{font-family:var(--sans);font-weight:500;font-size:1.15rem;margin:6px 0 16px}
+.mapa{height:210px;border:1px solid rgba(0,0,0,.12);margin-bottom:6px}
+.mapa iframe{width:100%;height:100%;border:0}
+
+/* FORMULARIOS */
+.box{background:rgba(255,255,255,.55);border:1px solid rgba(78,107,44,.3);padding:34px 26px;text-align:left}
+.box .head{text-align:center}
+.fg{margin-bottom:22px}
+.fg label,.lbl{display:block;font-family:var(--sans);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--tinta);margin-bottom:6px;font-weight:500}
+.fg label,.lbl{font-size:.8rem!important}
+input[type=text],select,textarea{width:100%;padding:9px 0;background:transparent;border:none;border-bottom:1px solid #B9B196;font-family:var(--titulo);font-size:1.3rem;color:var(--texto);outline:none;border-radius:0}
+input[type=text]:focus,select:focus,textarea:focus{border-bottom-color:var(--verde-os)}
+.fila{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid #D6CDB2}
+.fila .r{display:flex;gap:16px}
+.fila label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.fila input{accent-color:var(--verde-os)}
+.full{width:100%}
+.limite{font-family:var(--sans);font-size:.8rem;letter-spacing:2px;text-align:center;margin-top:20px;color:var(--tinta)}
+#pase{display:none;text-align:center;padding-bottom:18px;margin-bottom:22px;border-bottom:1px dashed rgba(78,107,44,.5)}
+#pase h3{font-size:2.2rem;color:var(--tinta);font-weight:500}
+#pase b{color:var(--verde-os);font-size:1.5rem}
+
+footer{text-align:center;padding:10px 0 30px;font-family:var(--sans);font-size:.6rem;letter-spacing:5px;color:var(--tinta);text-transform:uppercase}
+@media (prefers-reduced-motion:reduce){.reveal{transition:none;opacity:1;transform:none}}
+@media(max-width:480px){.paper{padding:48px 20px}.names .n{font-size:3.6rem}.hotel{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+
+<audio id="bg-audio" loop><source src="assets/song.mp3" type="audio/mpeg"></audio>
+
+<div id="envelope-screen">
+  <div class="envelope-wrapper" onclick="openInvitation()">
+    <div class="envelope-front"></div>
+    <div class="envelope-flap"></div>
+    <img class="seal" src="assets/sello.png" alt="Sello">
+    <div class="envelope-body"></div>
+  </div>
+  <div class="envelope-text">Toca para abrir</div>
+</div>
+
+<button id="audio-btn" onclick="toggleAudio()" aria-label="Música"><i class="fa-solid fa-music" id="audio-icon"></i></button>
+
+<div id="invitation-content">
+<div class="paper">
+
+  <!-- HERO -->
+  <section class="hero reveal">
+    <p class="intro">Nuestra boda</p>
+    <div class="names">
+      <span class="n">Cinthia Abigail</span>
+      <span class="y">y</span>
+      <span class="n">Pedro Salvador</span>
+    </div>
+    <div class="orn"><i class="fa-solid fa-leaf"></i></div>
+    <p class="frase">Con mucha ilusión queremos compartir contigo uno de los días más importantes de nuestras vidas. Será un honor contar con tu presencia para celebrar nuestro amor y comenzar juntos un nuevo capítulo.</p>
+  </section>
+
+  <!-- PADRES Y PADRINOS -->
+  <section class="reveal">
+    <p class="script">Con la bendición de nuestros padres</p>
+    <div class="grupo"><h4>Padres de la novia</h4><p>Martha Alicia López Orozco<br>Rafael Aviña Gómez</p></div>
+    <div class="grupo"><h4>Padres del novio</h4><p>Ma. Marlen Beltrán Ibarra<br>Salvador Salazar Covarrubias</p></div>
+    <div class="grupo"><h4>Padrinos</h4><p>Andrea Aviña López<br>Bryan Franco González</p></div>
+  </section>
+
+  <!-- FECHA, CALENDARIO Y CUENTA ATRÁS -->
+  <section class="reveal">
+    <p class="sub">Reserva la fecha</p>
+    <div class="fecha">13 · 03 · 2027</div>
+    <p class="sub" style="margin-top:6px">Sábado</p>
+    <div class="cal">
+      <div class="cal-mes">Marzo 2027</div>
+      <div class="grid7 cal-h"><div>DOM</div><div>LUN</div><div>MAR</div><div>MIE</div><div>JUE</div><div>VIE</div><div>SAB</div></div>
+      <div class="grid7" id="cal-days"></div>
+    </div>
+    <div class="timer">
+      <p class="script" style="font-size:2.1rem;margin-bottom:10px">Faltan</p>
+      <div id="countdown">
+        <span><b id="dias">00</b>DÍAS</span><span><b id="horas">00</b>HRS</span><span><b id="minutos">00</b>MIN</span><span><b id="segundos">00</b>SEG</span>
+      </div>
+    </div>
+    <button class="btn" onclick="downloadICS()"><i class="fa-regular fa-calendar-plus"></i> Agregar al calendario</button>
+  </section>
+
+  <!-- ITINERARIO -->
+  <section class="reveal">
+    <h2>Itinerario</h2>
+    <div class="orn"><i class="fa-regular fa-clock"></i></div>
+    <div class="tl">
+      <div class="ti"><i class="fa-solid fa-church"></i><div><b>18:00 HRS</b><span>Misa en Parroquia</span></div></div>
+      <div class="ti"><i class="fa-solid fa-champagne-glasses"></i><div><b>20:00 HRS</b><span>Recepción</span></div></div>
+      <div class="ti"><i class="fa-solid fa-utensils"></i><div><b>21:00 HRS</b><span>Cena</span></div></div>
+      <div class="ti"><i class="fa-solid fa-music"></i><div><b>22:00 HRS</b><span>Vals</span></div></div>
+    </div>
+  </section>
+
+  <!-- VESTIMENTA -->
+  <section class="reveal">
+    <div class="dress">
+      <p class="sub">Código de vestimenta</p>
+      <h2>Elegante</h2>
+      <span class="swatch"></span>
+      <p>El color <b>verde</b> está reservado para los novios.<br>Agradecemos no usarlo en tu atuendo.</p>
+    </div>
+  </section>
+
+  <!-- HOSPEDAJE -->
+  <section class="reveal">
+    <h2>Hospedaje</h2>
+    <div class="orn"><i class="fa-solid fa-bed"></i></div>
+    <p style="margin-bottom:18px">Para tu comodidad, sugerimos estas opciones:</p>
+    <div class="hotel"><h4>Hotel Emperador</h4><a class="btn line" target="_blank" rel="noopener" href="https://maps.app.goo.gl/ogJxVc7R5RrhCHWc8?g_st=iw"><i class="fa-solid fa-location-dot"></i> Ver mapa</a></div>
+    <div class="hotel"><h4>Hotel Kasa Blanka</h4><a class="btn line" target="_blank" rel="noopener" href="https://maps.app.goo.gl/MqXb2cTBGogAERGh6?g_st=iw"><i class="fa-solid fa-location-dot"></i> Ver mapa</a></div>
+    <div class="hotel"><h4>Hotel Zar</h4><a class="btn line" target="_blank" rel="noopener" href="https://maps.app.goo.gl/SMM1uxxK94g1DFoN7?g_st=iw"><i class="fa-solid fa-location-dot"></i> Ver mapa</a></div>
+  </section>
+
+  <!-- PLAYLIST SPOTIFY -->
+  <section class="reveal spotify">
+    <h2>Nuestra playlist</h2>
+    <div class="orn"><i class="fa-brands fa-spotify"></i></div>
+    <p>Ayúdanos a armar la música de la fiesta: agrega las canciones que no pueden faltar.</p>
+    <iframe data-testid="embed-iframe" src="https://open.spotify.com/embed/playlist/1boVCIOiLEWnLsBPxrS1ly?utm_source=generator&si=d4ecfef8dad6481b" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <a class="btn" target="_blank" rel="noopener" href="https://open.spotify.com/playlist/1boVCIOiLEWnLsBPxrS1ly?si=a31abc5dae244fc1&pt=a13826d22cf3cad05bd44463aab80357"><i class="fa-brands fa-spotify"></i> Agregar canciones</a>
+  </section>
+
+  <!-- GALERÍA EN VIVO -->
+  <section class="reveal">
+    <h2>Galería en vivo</h2>
+    <div class="orn"><i class="fa-solid fa-camera-retro"></i></div>
+    <p>¡Queremos ver la boda a través de tus ojos! Comparte tus fotos y videos con nosotros.</p>
+    <a class="btn" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1jc3blEfTV0dbr4eKiNvEFB3Ds-2p2i_2?usp=sharing"><i class="fa-brands fa-google-drive"></i> Subir mis fotos</a>
+  </section>
+
+  <!-- UBICACIONES -->
+  <section class="reveal">
+    <h2>Ubicaciones</h2>
+    <div class="orn"><i class="fa-solid fa-map-location-dot"></i></div>
+
+    <div class="venue">
+      <i class="fa-solid fa-church"></i>
+      <p class="sub">Ceremonia religiosa</p>
+      <h3>Parroquia El Expiatorio</h3>
+      <p class="hora">6:00 P.M.</p>
+      <div class="mapa"><iframe src="https://maps.google.com/maps?q=Parroquia%20El%20Expiatorio%20Guadalajara&output=embed" loading="lazy" allowfullscreen title="Mapa ceremonia"></iframe></div>
+      <a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/79esTK9Q9mv5XcUu6?g_st=iw"><i class="fa-solid fa-location-dot"></i> Ubicación exacta</a>
+    </div>
+
+    <div class="venue">
+      <i class="fa-solid fa-champagne-glasses"></i>
+      <p class="sub">Recepción</p>
+      <h3>Salón San Miguel</h3>
+      <p class="hora">8:00 P.M.</p>
+      <div class="mapa"><iframe src="https://maps.google.com/maps?q=Sal%C3%B3n%20San%20Miguel%20Guadalajara&output=embed" loading="lazy" allowfullscreen title="Mapa recepción"></iframe></div>
+      <a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/Enp8i5r7fPKXW94z5?g_st=iw"><i class="fa-solid fa-location-dot"></i> Ubicación exacta</a>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="reveal">
+    <div class="box">
+      <div class="head"><h2>R.S.V.P.</h2><p class="sub">Confirmación de asistencia</p></div>
+
+      <div id="pase">
+        <p class="sub">Pase personal</p>
+        <h3 id="guestName">Invitado</h3>
+        <p>Lugares reservados: <b id="guestPases"></b></p>
+        <p style="font-size:1.1rem;font-style:italic;margin-top:10px">Los lugares han sido reservados especialmente para ti. Los boletos son únicos e intransferibles.</p>
+      </div>
+
+      <div id="genericInputs">
+        <div class="fg"><label>Nombre del titular</label><input type="text" id="rsvpNombre" placeholder="Escribe tu nombre completo"></div>
+        <div class="fg"><label>Respuesta</label>
+          <select id="rsvpAsistencia">
+            <option value="">Selecciona una opción</option>
+            <option value="¡Sí, asistiré con gusto!">¡Sí, asistiré con gusto!</option>
+            <option value="Lamentablemente no podré asistir">Lamento no poder acompañarlos</option>
+          </select>
+        </div>
+      </div>
+      <div id="dynList"></div>
+
+      <div class="fg" style="margin-top:22px"><label>Enviar mi confirmación a</label>
+        <select id="destino">
+          <option value="523316800009">La novia (Cinthia)</option>
+          <option value="523861037704">El novio (Pedro)</option>
+        </select>
+      </div>
+      <button type="button" class="btn full" onclick="sendRSVP()"><i class="fa-brands fa-whatsapp" style="font-size:1.1rem"></i> Confirmar vía WhatsApp</button>
+      <p class="limite">CONFIRMAR ANTES DEL 11 DE ENERO</p>
+    </div>
+  </section>
+
+  <!-- LIBRO DE FIRMAS -->
+  <section class="reveal" style="margin-bottom:10px">
+    <div class="box">
+      <div class="head">
+        <p class="script" style="font-size:3rem;margin-bottom:6px">Libro de firmas</p>
+        <p style="font-size:1.2rem;margin-bottom:20px">Nos encantaría atesorar tus palabras. Déjanos un mensaje para recordar este día por siempre.</p>
+      </div>
+      <div class="fg"><textarea id="wishes" rows="3" placeholder="Con cariño para Cinthia y Pedro..."></textarea></div>
+      <button type="button" class="btn full" onclick="sendWishes()"><i class="fa-solid fa-paper-plane"></i> Enviar mensaje</button>
+    </div>
+  </section>
+
+</div>
+<footer>INVYTIA VIP DESIGN</footer>
+</div>
+
+<script>
+/* --- Sobre y audio --- */
+const audio=document.getElementById('bg-audio'),icon=document.getElementById('audio-icon'),abtn=document.getElementById('audio-btn');
+let opened=false;
+function openInvitation(){
+  if(opened)return;opened=true;
+  const scr=document.getElementById('envelope-screen'),c=document.getElementById('invitation-content');
+  document.querySelector('.envelope-wrapper').classList.add('open');
+  audio.play().then(()=>{icon.classList.replace('fa-music','fa-pause')}).catch(()=>{});
+  setTimeout(()=>{
+    scr.style.opacity='0';scr.style.visibility='hidden';
+    c.style.visibility='visible';c.style.opacity='1';abtn.style.display='flex';
+    setTimeout(()=>scr.style.display='none',1000);
+  },900);
+}
+function toggleAudio(){
+  if(audio.paused){audio.play();icon.classList.replace('fa-music','fa-pause')}
+  else{audio.pause();icon.classList.replace('fa-pause','fa-music')}
+}
+
+/* --- Calendario: marzo 2027 (empieza en lunes, 31 días, resalta el 13) --- */
+(function(){
+  let h='<div></div>'.repeat(1);
+  for(let d=1;d<=31;d++)h+=`<div class="${d===13?'hl':''}">${d}</div>`;
+  document.getElementById('cal-days').innerHTML=h;
+})();
+
+document.addEventListener('DOMContentLoaded',()=>{
+  /* Animación de entrada */
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* Pase personalizado: ?invitado=Nombre&pases=2&nombres=Ana,Luis */
+  const q=new URLSearchParams(location.search);
+  const inv=q.get('invitado'),pases=q.get('pases')||q.get('p'),nom=q.get('nombres');
+  if(pases){
+    document.getElementById('pase').style.display='block';
+    document.getElementById('guestName').textContent=inv||'Pase especial';
+    document.getElementById('guestPases').textContent=pases;
+  }
+  if(nom){
+    let h='<label class="lbl" style="margin-top:10px">Selecciona quiénes asisten:</label>';
+    nom.split(',').forEach((n,i)=>{
+      h+=`<div class="fila"><span class="rn">${n.trim()}</span><div class="r"><label><input type="radio" name="a${i}" value="Sí"> Sí</label><label><input type="radio" name="a${i}" value="No"> No</label></div></div>`;
+    });
+    document.getElementById('dynList').innerHTML=h;
+    document.getElementById('genericInputs').style.display='none';
+  }
+
+  /* Cuenta atrás: 13 de marzo de 2027, 6:00 p.m. */
+  const meta=new Date(2027,2,13,18,0,0).getTime();
+  const pad=n=>n<10?'0'+n:n;
+  const t=setInterval(()=>{
+    const dist=meta-Date.now();
+    if(dist<0){clearInterval(t);document.getElementById('countdown').innerHTML='<span style="font-size:1.8rem;width:100%;font-family:var(--titulo)">¡Hoy es el gran día!</span>';return}
+    document.getElementById('dias').textContent=pad(Math.floor(dist/864e5));
+    document.getElementById('horas').textContent=pad(Math.floor(dist%864e5/36e5));
+    document.getElementById('minutos').textContent=pad(Math.floor(dist%36e5/6e4));
+    document.getElementById('segundos').textContent=pad(Math.floor(dist%6e4/1e3));
+  },1000);
+});
+
+/* --- RSVP --- */
+function sendRSVP(){
+  const tel=document.getElementById('destino').value;
+  const list=document.getElementById('dynList');
+  let msg='';
+  if(list.children.length){
+    const si=[],no=[];let ok=true;
+    list.querySelectorAll('.rn').forEach((s,i)=>{
+      const o=document.querySelector(`input[name="a${i}"]:checked`);
+      if(!o)ok=false;else(o.value==='Sí'?si:no).push(s.textContent.trim());
+    });
+    if(!ok){alert('Por favor, indica si asiste o no cada persona de la lista.');return}
+    const inv=document.getElementById('guestName').textContent;
+    msg=`¡Hola! Somos *${inv}* y esta es nuestra confirmación para la boda de Cinthia y Pedro:\n\n`;
+    if(si.length)msg+=`✅ *Asistirán con gusto:*\n- ${si.join('\n- ')}\n\n`;
+    if(no.length)msg+=`❌ *Lamentablemente no podrán asistir:*\n- ${no.join('\n- ')}\n\n`;
+  }else{
+    const n=document.getElementById('rsvpNombre').value.trim(),a=document.getElementById('rsvpAsistencia').value;
+    if(!n||!a){alert('Por favor, completa tu nombre y tu respuesta.');return}
+    msg=`Hola, soy *${n}*.\n\nQuiero confirmar mi respuesta a la boda de Cinthia y Pedro: *${a}*\n\n`;
+  }
+  window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+/* --- Libro de firmas (se envía a la novia) --- */
+function sendWishes(){
+  const w=document.getElementById('wishes').value.trim();
+  if(!w){alert('Por favor, escribe un mensaje primero.');return}
+  const msg=`¡Hola Cinthia y Pedro! Les dejo este mensaje para su libro de firmas:\n\n"${w}"`;
+  window.open(`https://wa.me/523316800009?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+/* --- Agregar al calendario (18:00 hora de México = 00:00 UTC del 14) --- */
+function downloadICS(){
+  const d=`BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Boda Cinthia y Pedro//ES\nBEGIN:VEVENT\nDTSTART:20270314T000000Z\nDTEND:20270314T070000Z\nSUMMARY:Boda de Cinthia y Pedro\nLOCATION:Parroquia El Expiatorio\nDESCRIPTION:Misa 6:00 PM. Recepción 8:00 PM en Salón San Miguel.\nEND:VEVENT\nEND:VCALENDAR`;
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([d],{type:'text/calendar;charset=utf-8'}));
+  a.download='Boda_Cinthia_y_Pedro.ics';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+}
+</script>
+</body>
+</html>
